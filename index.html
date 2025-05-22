@@ -1,0 +1,245 @@
+<!-- Weather Application By Alan Lagali -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a2e;
+            color: #ffffff;
+        }
+        header, footer {
+            background-color: #0f3460; 
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1, footer p {
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+
+        .intro {
+            background-color: #3a4f77; 
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .intro:hover {
+            background-color: #2d3f5a; 
+        }
+
+        .intro img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .intro h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .intro p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        
+        .about {
+            background-color: #4a5a6e; 
+            color: #ffffff;
+            padding: 40px;
+            margin-top: 50px;
+            border-radius: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .about:hover {
+            background-color: #3a4659;
+        }
+
+        .about h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .about p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        h1, h2 {
+            color: #00bcd4; 
+        }
+
+        .form {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        .form:hover {
+            background-color: #1f3a54;
+        }
+
+        .form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form input, .form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background: #0f3460;
+            color: #e0e0e0;
+        }
+
+        .form button {
+            background: #00bcd4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .form button:hover {
+            background: #0097a7;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        .weather-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
+        .weather-icon {
+            width: 120px;
+            height: 120px;
+            transition: transform 0.3s;
+        }
+        .weather-icon:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
+        <script>
+            function submitForm(event) {
+                event.preventDefault();
+        
+                const location = document.getElementById("location").value;
+                const forecastType = document.getElementById("forecastType").value;
+        
+                window.location.href = `result.html?location=${location}&forecastType=${forecastType}`;
+            }
+        </script>
+    
+</head>
+<body>
+    <header>
+        <h1>Welcome to Weather Prediction App</h1>
+    </header>
+    <main class="container">
+        
+        <section class="intro">
+            <img src="https://t3.ftcdn.net/jpg/04/46/40/38/360_F_446403857_lPPoTW7uIXfkwzMXbpbMIWwOsNwY4oAl.jpg" alt="Weather Image">
+            <h2>Welcome to Your Personalized Weather Assistant</h2>
+            <p>Whether you're planning a day outdoors, organizing an event, or just want to know what the weather will be like tomorrow, our Weather Prediction App provides you with reliable and real-time weather forecasts at your fingertips.</p>
+            <p>Get accurate weather updates for your favorite locations, including current weather, hourly predictions, and extended forecasts. We use the latest weather data to help you stay informed and prepared for any weather conditions.</p>
+        </section>
+
+        
+        <section class="form">
+            <h2>Predict Weather</h2>
+            <form onsubmit="submitForm(event)">
+                <label for="location">Select Location:</label>
+                <select id="location" name="location">
+                    <option value="New York">New York</option>
+                    <option value="London">London</option>
+                    <option value="Paris">Paris</option>
+                    <option value="Tokyo">Tokyo</option>
+                    <option value="Sydney">Sydney</option>
+                    <option value="Dubai">Dubai</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Berlin">Berlin</option>
+                    <option value="Moscow">Moscow</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Cape Town">Cape Town</option>
+                    <option value="Beijing">Beijing</option>
+                    <option value="São Paulo">São Paulo</option>
+                </select>
+
+                <label for="forecastType">Select Forecast Type:</label>
+                <select id="forecastType" name="forecastType">
+                    <option value="current">Current Weather</option>
+                    <option value="hourly">Hourly Forecast</option>
+                    <option value="weekly">Weekly Forecast</option>
+                </select>
+
+                <label for="units">Choose Units:</label>
+                <select id="units" name="units">
+                    <option value="metric">celsius (°C, m/s)</option>
+                    <option value="imperial">Fahrenheit (°F, mph)</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        
+        <section class="about">
+            <h2>About Us</h2>
+            <p>At Weather Prediction, our mission is to provide accurate, real-time weather forecasts that help you make the most of every day. Whether you need a quick update or detailed predictions for the week ahead, we deliver forecasts that you can rely on.</p>
+            <p>Our team is passionate about making your experience seamless and enjoyable. We are constantly improving our app to bring you the best in weather prediction tools, so you can always be one step ahead of the elements.</p>
+        </section>
+
+        <div class="weather-icons">
+            <img src="https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Sunny" class="weather-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" alt="Cloudy" class="weather-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/1146/1146869.png" alt="Rainy" class="weather-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/1146/1146860.png" alt="Stormy" class="weather-icon">
+        </div>
+
+    </div>
+
+    </main>
+    <footer>
+        <p>&copy; 2025 Weather Prediction App. All rights reserved. @Alan</p>
+    </footer>
+</body>
+</html>

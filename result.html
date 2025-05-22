@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f3460;
+            color: #ffffff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #00bcd4;
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .weather-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
+        .weather-icon {
+            width: 120px;
+            height: 120px;
+            transition: transform 0.3s;
+        }
+        .weather-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .result-card {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-size: 18px;
+        }
+        .result-card h2 {
+            color: #76ff03;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .result-card p {
+            margin: 10px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #00bcd4;
+            font-weight: 600;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #0097a7;
+            text-decoration: underline;
+        }
+
+        
+        .specific-weather {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .specific-weather img {
+            width: 150px;
+            height: 150px;
+            transition: transform 0.3s;
+        }
+        .specific-weather img:hover {
+            transform: scale(1.1); 
+        }
+
+        .contact-us {
+            background-color: #16213e;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 18px;
+        }
+        .contact-us h3 {
+            color: #03ff92;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .contact-us p {
+            margin: 10px 0;
+        }
+
+        
+        @media (max-width: 768px) {
+            .weather-icons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .weather-icon {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+    <script>
+        
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        
+        function getRandomWeatherData() {
+            const weatherConditions = ['rainy', 'sunny', 'snowy', 'cloudy'];
+            const randomWeather = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+
+            
+            const temperature = (Math.random() * 20 + 15).toFixed(1);
+
+
+            const humidity = (Math.random() * 40 + 50).toFixed(0);
+
+            
+            const windSpeed = (Math.random() * 15 + 5).toFixed(1);
+
+            
+            const uvIndex = (Math.random() * 9 + 1).toFixed(1);
+
+            return {
+                weather: randomWeather,
+                temperature,
+                humidity,
+                windSpeed,
+                uvIndex,
+            };
+        }
+
+        window.onload = function() {
+    
+            const location = getURLParameter("location");
+            const forecastType = getURLParameter("forecastType");
+
+            
+            const weatherData = getRandomWeatherData();
+
+        
+            document.getElementById("locationName").innerText = `Location: ${location}`;
+            document.getElementById("forecastTypeText").innerText = `Forecast Type: ${forecastType}`;
+            document.getElementById("temperature").innerText = `Temperature: ${weatherData.temperature}°C`;
+            document.getElementById("humidity").innerText = `Humidity: ${weatherData.humidity}%`;
+            document.getElementById("windSpeed").innerText = `Wind Speed: ${weatherData.windSpeed} km/h`;
+            document.getElementById("uvIndex").innerText = `UV Index: ${weatherData.uvIndex}`;
+
+            
+            const specificWeatherDiv = document.getElementById("specificWeather");
+            let weatherIcon = '';
+            let weatherDescription = '';
+
+            switch (weatherData.weather) {
+                case 'rainy':
+                    weatherIcon = '<img src="https://cdn-icons-png.flaticon.com/512/1146/1146869.png" alt="Rainy" class="weather-icon">';
+                    weatherDescription = 'Expect some rain. Carry an umbrella!';
+                    break;
+                case 'sunny':
+                    weatherIcon = '<img src="https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Sunny" class="weather-icon">';
+                    weatherDescription = 'Clear skies and sunshine all day!';
+                    break;
+                case 'snowy':
+                    weatherIcon = '<img src="https://cdn-icons-png.flaticon.com/512/1146/1146871.png" alt="Snowy" class="weather-icon">';
+                    weatherDescription = 'Snowfall is expected. Bundle up and stay warm!';
+                    break;
+                case 'cloudy':
+                    weatherIcon = '<img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" alt="Cloudy" class="weather-icon">';
+                    weatherDescription = 'Cloudy weather. Might get some drizzle.';
+                    break;
+            }
+
+            
+            specificWeatherDiv.innerHTML = weatherIcon + `<p>${weatherDescription}</p>`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Prediction Results</h1>
+
+        <div class="weather-icons">
+            <img src="https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Sunny" class="weather-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" alt="Cloudy" class="weather-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/1146/1146869.png" alt="Rainy" class="weather-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/1146/1146860.png" alt="Stormy" class="weather-icon">
+        </div>
+    
+        <div class="result-card">
+            <h2 id="locationName">Location: [Location]</h2>
+            <p id="forecastTypeText">Forecast Type: [Forecast Type]</p>
+            <p id="temperature">Temperature: [Temperature]</p>
+            <p id="humidity">Humidity: [Humidity]</p>
+            <p id="windSpeed">Wind Speed: [Wind Speed]</p> 
+            <p id="uvIndex">UV Index: [UV Index]</p> 
+        </div>
+
+        <div class="specific-weather" id="specificWeather"></div>
+
+        <div class="contact-us">
+            <h3>Contact Us</h3>
+            <p><strong>Application By:</strong> Alan Lagali</p>
+            <p><strong>Contact Number:</strong> 9999900000</p>
+            <p><strong>Resident:</strong> Hubli</p>
+        </div>
+    
+        <a href="index.html" class="back-link">&#8592; Back to Home Page</a>
+    </div>
+</body>
+</html>

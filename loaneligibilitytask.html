@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Eligibility Prediction</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #f6d365, #fda085);
+            color: #333;
+        }
+
+        header {
+            background: url('https://source.unsplash.com/1920x1080/?finance,success') no-repeat center center/cover;
+            color: #fff;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(149, 165, 164, 0.6);
+            padding: 4rem 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 3.8rem;
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .intro-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 2rem 1rem;
+            gap: 2rem;
+        }
+
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .intro-text:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .intro-text img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        .intro-text h2 {
+            color: #fda085;
+            font-family: 'Lobster', cursive;
+        }
+
+        .intro-text p {
+            margin: 1rem 0;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .intro-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .intro-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .intro-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+            background: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .form-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-section h2 {
+            border-left: 6px solid #fda085;
+            padding-left: 0.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-family: 'Lobster', cursive;
+            font-size: 1.6rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            transition: border 0.3s ease-in-out;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #fda085;
+            outline: none;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .form-actions button {
+            background-color: #fda085;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-actions button:hover {
+            background-color: #f6d365;
+            transform: scale(1.1);
+        }
+
+        .about {
+            background: linear-gradient(120deg, #fda085, #f6d365);
+            padding: 3rem 1rem;
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .about h2 {
+            color: #fff;
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+        }
+
+        .about p {
+            margin: 1rem 0;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        /* Additional Section for Image Hover Effect */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .image-gallery img {
+            width: 280px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer Section */
+        footer {
+            background: #f6d365;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .intro-container {
+                flex-direction: column;
+            }
+
+            .intro-text {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&family=Poppins:wght@300;400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Loan Eligibility Prediction</h1>
+    </header>
+
+    <div class="intro-container">
+        <div class="intro-text">
+            <h2>Welcome!</h2>
+            <img src="https://tse4.mm.bing.net/th?id=OIP.OGTSQv_FIrziXQQYQO5YHwHaE2&pid=Api&P=0&h=180" style="width: 100%; border-radius: 10px; margin-bottom: 1rem; transition: transform 0.3s ease-in-out; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);">
+            <p style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: larger;">
+                Discover your loan eligibility in minutes. Provide a few details, and let our advanced tool guide you through the process. Our Loan Eligibility Prediction tool is designed to provide you with a fast and accurate assessment of your loan application prospects.
+            </p>
+        </div>
+        
+        <div class="intro-image">
+            <img src="https://tradingmarketinfo.com/wp-content/uploads/2023/01/Home-Loan-Eligibility.jpg" alt="404 Error">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-section">
+            <h2>Personal Information</h2>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Enter your age">
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <input type="radio" id="male" name="gender" value="Male"> <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="Female"> <label for="female">Female</label>
+                <input type="radio" id="other" name="gender" value="Other"> <label for="other">Other</label>
+            </div>
+            <div class="form-group">
+                <label for="maritalStatus">Marital Status</label>
+                <select id="maritalStatus">
+                    <option value="">Select</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Financial Information</h2>
+            <div class="form-group">
+                <label for="annualIncome">Annual Income</label>
+                <input type="number" id="annualIncome" placeholder="Enter your annual income">
+            </div>
+            <div class="form-group">
+                <label for="creditScore">Credit Score</label>
+                <input type="number" id="creditScore" placeholder="Enter your credit score">
+            </div>
+            <div class="form-group">
+                <label for="loanAmount">Loan Amount</label>
+                <input type="number" id="loanAmount" placeholder="Enter loan amount">
+            </div>
+            <div class="form-group">
+                <label for="existingDebt">Existing Debt</label>
+                <input type="number" id="existingDebt" placeholder="Enter your existing debt">
+            </div>
+            <div class="form-group">
+                <label for="employmentStatus">Employment Status</label>
+                <select id="employmentStatus">
+                    <option value="">Select</option>
+                    <option value="Employed">Employed</option>
+                    <option value="Self-Employed">Self-Employed</option>
+                    <option value="Unemployed">Unemployed</option>
+                    <option value="Retired">Retired</option>
+                </select>
+                <div class="form-actions">
+                    <button type="submit" id="submitButton">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="image-gallery">
+        <img src="https://www.founderjar.com/wp-content/uploads/2022/09/Business-Loan-Eligibility-Criteria.png" alt="404 Error">
+        <img src="https://www.indusind.com/iblogs/wp-content/uploads/What-are-eligibility-requirements-for-a-personal-loan.jpg">
+        <img src="https://moneyexcel.com/wp-content/uploads/2019/06/homeloan-eligibility.png" alt="404 Error">
+    </div>
+
+    <div class="about">
+        <h2>About Us</h2>
+        <p>We aim to simplify the process of determining your loan eligibility. Our tool uses cutting-edge technology to provide instant feedback and guide you toward better financial decisions.</p>
+        <p>Whether you are planning to buy a home, start a business, or achieve your dreams, we are here to assist you!</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 All Rights Reserved</p>
+    </footer>
+</body>
+</html>

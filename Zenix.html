@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenix</title>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #1a202c;
+            color: #ffffff;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .sidebar-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .sidebar-header p {
+            font-size: 14px;
+            color: #a0aec0;
+        }
+
+        .menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu ul li {
+            padding: 15px 20px;
+            color: #e2e8f0;
+            cursor: pointer;
+            border-bottom: 1px solid #2d3748;
+            transition: background-color 0.3s;
+        }
+
+        .menu ul li:hover {
+            background-color: #2d3748;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 250px;
+            top: 0;
+            background-color: #1a202c;
+            border-left: 1px solid #2d3748;
+            width: 200px;
+        }
+
+        .dropdown-content li {
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 24px;
+            color: #1a202c;
+        }
+
+        .dashboard-header .actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .dashboard-header .actions .buy {
+            background-color: #38a169;
+        }
+
+        .dashboard-header .actions .sell {
+            background-color: #e53e3e;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid transparent;
+        }
+
+        .card:nth-child(1) {
+            border-left: 5px solid #4299e1;
+            background-color: #ebf8ff;
+        }
+
+        .card:nth-child(2) {
+            border-left: 5px solid #38a169;
+            background-color: #e6fffa;
+        }
+
+        .card:nth-child(3) {
+            border-left: 5px solid #e53e3e;
+            background-color: #ffe6e6;
+        }
+
+        .card:nth-child(4) {
+            border-left: 5px solid #dd6b20;
+            background-color: #fff5eb;
+        }
+
+        .card .balance {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card .valid {
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .recent-activities {
+            margin-top: 40px;
+        }
+
+        .recent-activities h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #1a202c;
+        }
+
+        .recent-activities table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .recent-activities table thead {
+            background-color: #2d3748;
+            color: #ffffff;
+        }
+
+        .recent-activities table thead th {
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .recent-activities table tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .recent-activities table tbody td {
+            padding: 15px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        .status.completed {
+            background-color: #38a169;
+        }
+
+        .status.pending {
+            background-color: #dd6b20;
+        }
+
+        .status.canceled {
+            background-color: #e53e3e;
+        }
+
+        .quick-transfer, .recent-contacts {
+            margin-top: 40px;
+        }
+
+        .quick-transfer h2, .recent-contacts h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #1a202c;
+        }
+
+        .quick-transfer .transfer-options {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .quick-transfer .transfer-card {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid transparent;
+        }
+
+        .quick-transfer .transfer-card:nth-child(1) {
+            border-top: 5px solid #4299e1;
+            background-color: #ebf8ff;
+        }
+
+        .quick-transfer .transfer-card:nth-child(2) {
+            border-top: 5px solid #38a169;
+            background-color: #e6fffa;
+        }
+
+        .quick-transfer .transfer-card:nth-child(3) {
+            border-top: 5px solid #e53e3e;
+            background-color: #ffe6e6;
+        }
+
+        .recent-contacts .contacts {
+            display: flex;
+            gap: 100px;
+            
+        }
+
+        .recent-contacts .contact-card {
+            width: 100px;
+            text-align: center;
+        }
+
+        .recent-contacts .contact-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chart {
+            width: 45%;
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .chart-title {
+            margin-bottom: 10px;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .legend-text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://tse3.mm.bing.net/th?id=OIP.iOJ3d7QnoKo7X0GrBQf97gHaHa&pid=Api&P=0&h=180" alt="Profile">
+            <h3>Hello, Marquez</h3>
+            <p>marquezzz@mail.com</p>
+        </div>
+        <div class="menu">
+            <ul>
+                <li>Dashboard</li>
+                <li class="dropdown">
+                    Wallet
+                    <ul class="dropdown-content">
+                        <li>Overview</li>
+                        <li>Transactions</li>
+                        <li>Settings</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    Transactions
+                    <ul class="dropdown-content">
+                        <li>History</li>
+                        <li>Pending</li>
+                        <li>Completed</li>
+                    </ul>
+                </li>
+                <li>Portfolio</li>
+                <li>Market Capital</li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="dashboard-header">
+            <h1>Dashboard Light</h1>
+            <div class="actions">
+                <button class="buy">Buy</button>
+                <button class="sell">Sell</button>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <div class="balance">$773,412.66</div>
+                <div class="valid">Valid Through: 09/26</div>
+                <div class="valid">Card Holder: Marquezz</div>
+            </div>
+            <div class="card">
+                <div class="balance">$453,452.76</div>
+                <div class="valid">Valid Through: 08/21</div>
+                <div class="valid">Card Holder: Lionel Messi</div>
+            </div>
+            <div class="card">
+                <div class="balance">$374,612.86</div>
+                <div class="valid">Valid Through: 10/16</div>
+                <div class="valid">Card Holder: Michel John</div>
+            </div>
+            <div class="card">
+                <div class="balance">$963,418.6</div>
+                <div class="valid">Valid Through: 12/04</div>
+                <div class="valid">Card Holder: Ronaldo CR7</div>
+            </div>
+        </div>
+        <div class="recent-activities">
+            <h2>Recent Trading Activities</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Time</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bitcoin</td>
+                        <td>06:24:45 AM</td>
+                        <td>+5,553</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ethereum</td>
+                        <td>06:24:45 AM</td>
+                        <td>+5,553</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Monero</td>
+                        <td>06:24:45 AM</td>
+                        <td>-912</td>
+                        <td><span class="status canceled">Canceled</span></td>
+                    </tr>
+                    <tr>
+                        <td>Litecoin</td>
+                        <td>06:24:45 AM</td>
+                        <td>+7,762</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <h2>Market Overview</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur</p>
+          
+            <div class="chart-container">
+              <div class="chart">
+                <div class="chart-title">Chart 1</div>
+                <canvas id="chart1"></canvas>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #007bff;"></div>
+                    <div class="legend-text">BTC</div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #28a745;"></div>
+                    <div class="legend-text">ETH</div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="chart">
+                <div class="chart-title">Chart 2</div>
+                <canvas id="chart2"></canvas>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ffc107;"></div>
+                    <div class="legend-text">XRP</div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #6c757d;"></div>
+                    <div class="legend-text">ZEC</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <div class="chart-container">
+              <div class="chart">
+                <div class="chart-title">Chart 3</div>
+                <canvas id="chart3"></canvas>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #dc3545;"></div>
+                    <div class="legend-text">Line 1</div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #17a2b8;"></div>
+                    <div class="legend-text">Line 2</div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="chart">
+                <div class="chart-title">Chart 4</div>
+                <canvas id="chart4"></canvas>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f8b425;"></div>
+                    <div class="legend-text">Line 1</div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background-color: #20c997;"></div>
+                    <div class="legend-text">Line 2</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+
+        <div class="quick-transfer">
+            <h2>Quick Transfer</h2>
+            <div class="transfer-options">
+                <div class="transfer-card">Transfer to Bank</div>
+                <div class="transfer-card">Send Crypto</div>
+                <div class="transfer-card">Pay Bills</div>
+            </div>
+        </div>
+
+        <div class="recent-contacts">
+            <h2>Recent Contacts</h2>
+            <div class="contacts">
+                <div class="contact-card">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP._jGOWB-I7rCJmhKzqhw0ZAAAAA&pid=Api&P=0&h=180" alt="Contact 1">
+                    <p>John Doe</p>
+                </div>
+                <div class="contact-card">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.F3Li2-1REm3B5zqjFDzXowHaHa&pid=Api&P=0&h=180" alt="Contact 2">
+                    <p>Jane Smith</p>
+                </div>
+                <div class="contact-card">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.arajm6MOZLUHuSHYtvMWbQHaHa&pid=Api&P=0&h=180" alt="Contact 3">
+                    <p>Alex Brown</p>
+                </div>
+                <div class="contact-card">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.LepJh2tzQmb1g7RxFS6CegHaE8&pid=Api&P=0&h=180" alt="Contact 4">
+                    <p>Emily Davis</p>
+                </div>
+                <div class="contact-card">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP._E6VgE7fH69UeO0QYmVzeAHaHa&pid=Api&P=0&h=180" alt="Contact 5">
+                    <p>Alan Walker</p>
+                </div>
+                <div class="contact-card">
+                    <img src="https://dynaimage.cdn.cnn.com/cnn/digital-images/org/2200b2eb-538f-464c-8cca-2c44a8738e90.jpg" alt="Contact 6">
+                    <p>Joe Biden</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const chartData = [
+  {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+    datasets: [
+      {
+        label: 'BTC',
+        data: [12, 19, 3, 5, 2, 3, 9],
+        borderColor: '#007bff',
+        fill: false
+      },
+      {
+        label: 'ETH',
+        data: [5, 23, 7, 12, 4, 2, 3],
+        borderColor: '#28a745',
+        fill: false
+      }
+    ]
+  },
+  {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+    datasets: [
+      {
+        label: 'XRP',
+        data: [15, 10, 18, 5, 20, 12, 18],
+        borderColor: '#ffc107',
+        fill: false
+      },
+      {
+        label: 'ZEC',
+        data: [8, 15, 12, 9, 17, 5, 10],
+        borderColor: '#6c757d',
+        fill: false
+      }
+    ]
+  },
+  {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+    datasets: [
+      {
+        label: 'Line 1',
+        data: [25, 18, 30, 22, 28, 20, 25],
+        borderColor: '#dc3545',
+        fill: false
+      },
+      {
+        label: 'Line 2',
+        data: [15, 20, 18, 25, 12, 28, 15],
+        borderColor: '#17a2b8',
+        fill: false
+      }
+    ]
+  },
+  {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+    datasets: [
+      {
+        label: 'Line 1',
+        data: [30, 25, 35, 28, 32, 27, 30],
+        borderColor: '#f8b425',
+        fill: false
+      },
+      {
+        label: 'Line 2',
+        data: [20, 28, 25, 30, 22, 29, 20],
+        borderColor: '#20c997',
+        fill: false
+      }
+    ]
+  }
+];
+
+
+const ctx1 = document.getElementById('chart1').getContext('2d');
+const ctx2 = document.getElementById('chart2').getContext('2d');
+const ctx3 = document.getElementById('chart3').getContext('2d');
+const ctx4 = document.getElementById('chart4').getContext('2d');
+
+const myChart1 = new Chart(ctx1, {
+  type: 'line',
+  data: chartData[0],
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+const myChart2 = new Chart(ctx2, {
+  type: 'line',
+  data: chartData[1],
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+const myChart3 = new Chart(ctx3, {
+  type: 'line',
+  data: chartData[2],
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+const myChart4 = new Chart(ctx4, {
+  type: 'line',
+  data: chartData[3],
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbucks Global Academy</title>
+    <style>
+        *{
+            margin: 0px;
+        }
+        .parent{
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            background-color: rgb(179, 179, 189);
+        }
+        .star{
+            width: 500px;
+            margin: 30px 0px 0px 800px;
+        }
+        h1 {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            /* margin: 100px 0px 0px 800px; */
+        }
+
+        p {
+            font-weight: lighter;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            /* margin: 30px 0px 0px 800px; */
+            font-size: medium;
+            text-align: justify;
+        }
+
+        h4 {
+            /* margin: 20px 0px 0px 800px; */
+            font-weight: bolder;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin-top: 10px;
+        }
+
+        #a {
+            /* margin: 20px 0px 0px 800px; */
+            font-family: Arial, Helvetica, sans-serif;
+            margin-top: 10px;
+        }
+
+        u {
+            color: green;
+        }
+
+        /* form {
+            margin: 30px 0px 0px 800px;
+        } */
+
+        #p2 {
+            margin: 20px 0px 0px 0px;
+        }
+
+        #a1,#a2,#a3{
+            width: 500px;
+            margin-top: 5px;
+        }
+        #z{
+            width: 400px;
+        }
+        #a5,#a5-inp{
+            margin: 0px;
+        }
+        .a5{
+            margin-left: 33px;
+        }
+
+        button {
+            height: 30px;
+            width: 80px;
+            border: 2px;
+            padding: 6px;
+            border-radius: 40px;
+            background-color: rgb(0,112,74);
+            color: white;
+            margin: 30px 0px 0px 225px;
+        }
+        .n7{
+            color: white;
+            width:80px;
+            background-color:rgb(41,65,59);
+            padding: 8px;
+            border-radius:20px;
+            text-align: center;
+            margin-right:200px;
+        }
+        .n6{
+            border: 1px solid black;
+            border-radius:40px;
+            padding:8px;
+        }
+        .n1{
+            margin-top: 150px;
+            height: 650px;
+            width: 550px;
+            display: flex;
+            padding-top: 100px;
+            padding-left: 100px;
+        }
+        .s1{
+            color:black;
+            background-color: rgb(179, 179, 189);
+            border: none;
+        }
+        .n2,.n6{
+            margin-left: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="n1"><img src="https://apacbenefits.starbucks.com/wp-content/uploads/2022/11/SBX2020-Customizing-Beverages-Featured-Image-1440x700-1-980x476.jpeg" alt="mobile rfi image" class="n1"></div>
+      <div class="n2">Pursuit of Good
+        <select name="" id="" class="s1">
+        </select>
+      </div>
+      <div class="n3">Third Place
+        <select name="" id="" class="s1">
+        </select>
+      </div>
+      <div class="n4">Coffee Academy
+        <select name="" id="" class="s1">
+        </select>
+      </div>
+      <div class="n5">opportunity
+        <select name="" id="" class="s1">
+        </select>
+      </div>
+      <div class="n6">All Courses</div>
+      <div class="n7">Sign In</div>
+    </div>
+    <div class="star">
+        <h1>Take courses today</h1>
+        <p>There are many pathways to opportunity and success and education is a great one.To get started with taking
+            courses on Starbucks Global Academy, simply enter your name and email in the form below and we will send you
+            updates and a link to your account.</p>
+        <h4>Already have an account?</h4>
+        <p id="a"><u>Sign in</u> to add these courses to your account</p><br>
+        <form>
+            <label for="a1">
+                First-name <br> <input required id="a1" type="text">
+            </label>
+            <br><br><br>
+            <label for="a2">
+                Last-name <br> <input required type="text" id="a2">
+            </label>
+            <br><br><br>
+            <label for="a3">
+                Email <br> <input required type="text" id="a3">
+            </label>
+            <br><br><br>
+            <label for="a4">
+                Location <select name="" id="a4">
+                    <option>Bengaluru</option>
+                    <option>Hyderabad</option>
+                    <option>Mumbai</option>
+                    <option>Delhi</option>
+                </select>
+            </label>
+            <label for="a5" class="a5">
+                Phone number <select name="" id="a5">
+                    <option>+91</option>
+                    <option>+90</option>
+                    <option>+89</option>
+                    <option>+88</option>
+                    <option>+87</option>
+                    <input type="text" placeholder="Phone-number" id="a5-inp">
+                </select>
+            </label>
+            <p id="p2">Are you a starbucks partner?</p><br>
+            <input type="text" id="z">
+            <select name="" id="">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+            <button>Next</button>
+        </form>
+    </div>
+</body>
+
+</html>
